@@ -40,9 +40,7 @@ function the_linked_list_link() {
 
 // Called to see if the current post in the loop is a linked list
 function is_linked_list() {
-  global $wp_query;
-  $postid = $wp_query->post->ID;
-  $url = get_post_meta($postid, 'linked_list_url', true);
+  $url = get_post_custom_values('linked_list_url');
   return (!empty($url));
 }
 
@@ -395,8 +393,8 @@ function dfll_tweet($tweet) {
   global $post;
   global $dfllCustomFieldValue; // in case it was added using the first-line method
   $options = get_option('dfll_options');  
-  $url = get_post_meta($post->ID, 'linked_list_url', true);
-
+  $url = get_post_custom_values('linked_list_url');
+  
   if (empty($url) && empty($dfllCustomFieldValue)) { // not a linked list item
     if ($options['twitter_glyph_before_non_linked_list']) { // check for option 
       $tweet->tw_text = get_glyph() . " " . $tweet->tw_text;
